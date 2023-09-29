@@ -30,17 +30,15 @@
 				<!-- Password -->
 				<div class="input-group input-group-lg">
 				  <input class="form-control fakepassword" type="password"  name="password" id="psw-input" placeholder="Enter password" >
-				  <span class="input-group-text p-0">
-					<i class="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
-				  </span>
+				 
 				</div>
 			  </div>
 			  <!-- Remember me -->
 			  <div class="mb-3 d-sm-flex justify-content-between">
-				<div>
+				{% comment %} <div>
 				  <input type="checkbox" class="form-check-input" id="rememberCheck">
 				  <label class="form-check-label" for="rememberCheck">Remember me?</label>
-				</div>
+				</div> {% endcomment %}
 				{% comment %} <a href="">Forgot password?</a> {% endcomment %}
 			  </div>
 			  <span>{{error_message}}</span>

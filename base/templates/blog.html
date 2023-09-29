@@ -36,7 +36,7 @@
                 <div class="d-none d-sm-inline-block">
                   <p class="mb-2">{{blog.description}}</p>
                   <!-- BLog date -->
-                  <a class="small text-secondary" href="{% url "details" blog.id %}"> <i class="bi bi-calendar-date pe-1"></i>{{blog.created}}</a>
+                  <a class="small text-secondary" href="{% url "details" blog.id %}">{{blog.created}}</a>
                 </div>
                 {% if blog.user == request.user %}
                 <form method="post" action="{% url "delete_blog" blog.id %}">

@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -69,6 +70,7 @@ def details(request, pk):
     return render(request, "details.html", context)
 
 
+@login_required(login_url="login")
 def add_blog(request):
     blog = Blog()
 
@@ -90,6 +92,7 @@ def add_blog(request):
     return HttpResponseRedirect(redirect_to=referrer_url)
 
 
+@login_required(login_url="login")
 def add_comment(request, pk):
     blog = get_object_or_404(Blog, pk=pk)
     if request.method == "POST":
@@ -106,13 +109,13 @@ def register_user(request):
         confirm_password = request.POST["confirm_password"]
 
         users = User.objects.all()
-        if username not in users:
+        if username.lower() not in users:
             if password != confirm_password:
                 messages.info(request, "Password does not match!")
                 return render(request, "sign-up.html")
             else:
                 user = User()
-                user.username = username
+                user.username = username.lower()
                 user.set_password(password)
                 user.save()
                 login(request, user)
@@ -131,7 +134,7 @@ def login_user(request):
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, username=username.lower(), password=password)
         if user is not None:
             login(request, user)
             return redirect("home")
@@ -141,7 +144,7 @@ def login_user(request):
     return render(request, "sign-in.html")
 
 
-
+@login_required(login_url="login")
 def logout_user(request):
     logout(request)
     referrer_url = request.META.get("HTTP_REFERER")
@@ -151,6 +154,7 @@ def logout_user(request):
         return HttpResponseRedirect("/")
 
 
+
 def delete_blog(request, pk):
     if request.method == "POST":
         blog = Blog.objects.get(pk=pk)
@@ -158,12 +162,12 @@ def delete_blog(request, pk):
     referrer_url = request.META.get("HTTP_REFERER")
     return HttpResponseRedirect(redirect_to=referrer_url)
 
-def profile(request):
-    user = request.user
-    context = {
-        "user": user,
-    }
-    return render(request, "profile.html", context)
+# def profile(request):
+#     user = request.user
+#     context = {
+#         "user": user,
+#     }
+#     return render(request, "profile.html", context)
 
 
 
