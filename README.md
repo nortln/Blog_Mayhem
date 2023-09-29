@@ -10,4 +10,8 @@
 ![Blog Mayhem - Google Chrome 9_29_2023 7_47_44 PM](https://github.com/nortln/Blog_Mayhem/assets/112275172/2a8c611b-4f0b-4ee7-8579-6a89e596abe3)
 ##
 #
+<<<<<<< HEAD
 ![Blog Mayhem - Google Chrome 9_29_2023 7_47_52 PM](https://github.com/nortln/Blog_Mayhem/assets/112275172/7a7c14a9-3cff-4b3c-a437-e636132e6e3e)
+=======
+![Blog Mayhem - Google Chrome 9_29_2023 7_47_52 PM](https://github.com/nortln/Blog_Mayhem/assets/112275172/7a7c14a9-3cff-4b3c-a437-e636132e6e3e)
+>>>>>>> 31e2c583f8086fc5313c3aa8a8d39fb80eef0539
