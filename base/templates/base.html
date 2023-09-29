@@ -9,6 +9,8 @@
 	<meta name="author" content="Webestica.com">
 	<meta name="description" content="{% block description %}{% endblock description %}">
 
+	
+
 	<!-- Dark mode -->
 	<script>
 		const storedTheme = localStorage.getItem('theme')
@@ -116,9 +118,9 @@ Header START -->
         <!-- Nav Search START -->
         <div class="nav mt-3 mt-lg-0 flex-nowrap align-items-center px-4 px-lg-0">
           <div class="nav-item w-100">
-            <form class="rounded position-relative">
-              <input class="form-control ps-5 bg-light" type="search" placeholder="Search..." aria-label="Search">
-              <button class="btn bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y" type="submit"><i class="bi bi-search fs-5"> </i></button>
+            <form class="rounded position-relative" method="get" action="search">
+              <input class="form-control ps-5 bg-light" type="search" name="search" placeholder="Search..." aria-label="Search">
+              <button class="btn bg-transparent px-2 py-0 position-absolute top-50 start-0 translate-middle-y" type="submit"><img width="20" height="20" src="{% static "img/search.png" %}" ></button>
             </form>
           </div>
         </div>
@@ -127,7 +129,7 @@ Header START -->
 				<ul class="navbar-nav navbar-nav-scroll ms-auto">
 					<!-- Nav item 1 Demos -->
 					<li class="nav-item dropdown">
-						<a class="nav-link " href="{% url "home" %}" id="homeMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Home</a>
+						<a class="nav-link " href="{% url "home" %}" id="homeMenu" aria-haspopup="true" aria-expanded="false">Home</a>
 			
 						</ul>
 					</li>
@@ -173,7 +175,11 @@ Header START -->
             <!-- Links -->           
            
             <li class="dropdown-divider"></li>
-            {% if request.user.AnonymousUser %}<li><a class="dropdown-item bg-danger-soft-hover" href="{% url "logout" %}">Sign Out</a></li>{% else %}<li><a class="dropdown-item bg-danger-soft-hover" href="{% url "login" %}">Login</a></li>{% endif %}
+            {% if request.user.is_authenticated %}
+			<li><a class="dropdown-item bg-danger-soft-hover" href="{% url "logout" %}">Sign Out</a></li>
+			{% else %}
+			<li><a class="dropdown-item bg-danger-soft-hover" href="{% url "login" %}">Login / Register</a></li>
+			{% endif %}
             <li> <hr class="dropdown-divider"></li>
             <!-- Dark mode options START -->
 						<li>
@@ -227,7 +233,7 @@ Header END -->
       </div>
       <div class="col-md-6">
         <!-- Copyright START -->
-        <p class="text-center text-md-end mb-0">©2023 <a class="text-body" target="_blank" href="https://www.webestica.com/"> Blog Mayhem </a>All rights reserved.</p>
+        <p class="text-center text-md-end mb-0">©2023 <a class="text-body" target="_blank" href=""> Blog Mayhem </a>All rights reserved.</p>
         <!-- Copyright END --> 
       </div>
     </div>
