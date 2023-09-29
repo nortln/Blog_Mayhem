@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block title %}{{blog.title}}{% endblock title %}
 
 {% block description %}{{blog.description}}{% endblock description %}
@@ -14,7 +16,7 @@
         <div class="vstack gap-4">
           <!-- Blog single START -->
           <div class="card card-body">
-            <img class="rounded" src="static{{blog.image.url}}" alt="">
+            <img class="rounded" src="{% static blog.image.url %}" alt="">
             <div class="mt-4">
               <!-- Tag -->
               <a href="" class="badge bg-danger bg-opacity-10 text-danger mb-2 fw-bold">{{blog.category}}</a>

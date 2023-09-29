@@ -144,8 +144,11 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-    refferer_url = request.META.get("HTTP_REFERRER")
-    return HttpResponseRedirect(redirect_to=refferer_url)
+    referrer_url = request.META.get("HTTP_REFERER")
+    if referrer_url is not None:
+        return HttpResponseRedirect(redirect_to=referrer_url)
+    else:
+        return HttpResponseRedirect("/")
 
 
 def delete_blog(request, pk):
@@ -156,7 +159,11 @@ def delete_blog(request, pk):
     return HttpResponseRedirect(redirect_to=referrer_url)
 
 def profile(request):
-    return render(request, "profile.html")
+    user = request.user
+    context = {
+        "user": user,
+    }
+    return render(request, "profile.html", context)
 
 
 

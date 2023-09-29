@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}Blog Mayhem{% endblock title %}
 
@@ -26,7 +27,7 @@
             <div class="row g-3">
               <div class="col-4">
                 <!-- Blog image -->
-                <img class="rounded" src="static{{blog.image.url}}" alt="">
+                <img class="rounded" src="{% static blog.image.url %}" alt="">
               </div>
               <div class="col-8">
                 <!-- Blog caption -->
@@ -55,7 +56,7 @@
           <div class="mt-4">
             <nav aria-label="navigation">
               <ul class="pagination pagination-light d-inline-block d-md-flex justify-content-center">
-                <li class="page-item disabled">
+                <li class="page-item ">
                   {% if blogs.has_previous %}
                   <a class="page-link" href="{% url "home" blogs.previous_page_number %}">Prev</a>
                   {% endif %}
@@ -66,6 +67,9 @@
                   {% if blogs.has_next %}
                   <a class="page-link" href="{% url "home" blogs.next_page_number %}">Next</a>
                   {% endif %}
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="{% url "home" blogs.paginator.num_pages %}">Last</a>
                 </li>
               </ul>
             </nav>
