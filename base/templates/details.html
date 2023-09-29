@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}{{blog.title}}{% endblock title %}
+
+{% block description %}{{blog.description}}{% endblock description %}
+
+{% block content %}
+<main>
+  <!-- Container START -->
+  <div class="container">
+    <div class="row g-4">
+      <!-- Main content START -->
+      <div class="col-lg-8 mx-auto">
+        <div class="vstack gap-4">
+          <!-- Blog single START -->
+          <div class="card card-body">
+            <img class="rounded" src="static{{blog.image.url}}" alt="">
+            <div class="mt-4">
+              <!-- Tag -->
+              <a href="" class="badge bg-danger bg-opacity-10 text-danger mb-2 fw-bold">{{blog.category}}</a>
+              <!-- Title info -->
+              <h1 class="mb-2 h2">{{blog.title}}</h1>
+              <ul class="nav nav-stack gap-3 align-items-center">
+                <li class="nav-item">
+                  <div class="nav-link">
+                    by <a href="" class="text-reset btn-link">{{blog.user}}</a>
+                  </div>
+                </li>
+                <li class="nav-item"> <i class="bi bi-calendar-date pe-1"></i>{{blog.created}}</li>
+                {% comment %} <li class="nav-item"> <i class="bi bi-clock pe-1"></i>5 min read</li> {% endcomment %}
+              </ul>
+              <!-- description -->
+              <p class="mt-4">{{blog.description}} </p>
+             
+              {% comment %} <!-- Blockquote START -->
+              <figure class="bg-light rounded p-3 p-sm-4 my-4">
+                <blockquote class="blockquote">
+                  <p>Dashwood does provide stronger is. But discretion frequently sir she instruments unaffected.</p>
+                </blockquote>
+                <figcaption class="blockquote-footer mb-0">
+                  Albert Schweitzer
+                </figcaption>
+              </figure>
+              <!-- Blockquote END -->
+       {% endcomment %}
+            </div>
+          </div>
+          <!-- Card END -->
+          <!-- Comments START -->
+          <div class="card">
+            <div class="card-header pb-0 border-0">
+              <h4>{{comment_length}} 
+                {% if comment_length > 1 %}
+                Comments
+                {% else %}
+                Comment
+                {% endif %}
+              </h4>
+            </div>
+            <div class="card-body">
+              <!-- Comments START -->
+              <!-- Comment level 1-->
+              {% for comment in comments %}
+              
+              <div class="my-4 d-flex">
+                {% comment %} <img class="avatar avatar-md rounded-circle float-start me-3" src="./blog details_files/04.jpg" alt="avatar"> {% endcomment %}
+                <div>
+                  <div class="mb-2 d-sm-flex">
+                    <h6 class="m-0 me-2">{{comment.user}}</h6>
+                    <span class="me-3 small">{{comment.created}}</span>
+                  </div>
+                  <p>{{comment.text}}</p>
+                </div>
+              </div>
+         
+              {% endfor %}
+              <!-- Comments END -->
+              <hr class="my-4">
+              <!-- Reply START -->
+              <div>
+                <h4>Leave a reply</h4>
+                <form class="row g-3 mt-2" method="post" action="{% url "add_comment" blog.id %}">
+                  {% csrf_token %}
+                  <!-- Your Comment -->
+                  <div class="col-12">
+                    <label class="form-label">Your Comment *</label>
+                    <textarea class="form-control" rows="3" name="comment"></textarea> 
+                    {% comment %} {{form}} {% endcomment %}
+                  </div>
+                  <!-- Button -->
+                  <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Post comment</button>
+                  </div>
+                </form>
+              </div>
+              <!-- Reply END -->
+            </div>
+          </div>
+          <!-- Blog single END -->
+        </div>
+      </div>
+      <!-- Main content END -->
+    </div> <!-- Row END -->
+  </div>
+  <!-- Container END -->
+
+</main>
+
+{% endblock content %}

@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block title %}Blog Mayhem{% endblock title %}
+
+{% block description %}Blog Mayhem - A forum for Exciting Blogs{% endblock description %}
+
+
+{% block content %}
+
+
+
+
+<!-- **************** MAIN CONTENT START **************** -->
+<main>
+  
+  <!-- Container START -->
+  <div class="container">
+    <div class="row g-4">
+      <!-- Main content START -->
+      <div class="col-lg-8">
+        <div class="bg-mode p-4">
+          <h1 class="h4 mb-4">Latest blogs</h1>
+          {% for blog in blogs %}
+          <!-- Blog item START -->
+          <div class="card bg-transparent border-0">
+            <div class="row g-3">
+              <div class="col-4">
+                <!-- Blog image -->
+                <img class="rounded" src="static{{blog.image.url}}" alt="">
+              </div>
+              <div class="col-8">
+                <!-- Blog caption -->
+                <a class="badge bg-danger bg-opacity-10 text-danger mb-2 fw-bold">{{blog.category}}</a>
+                <h5><a href="{% url "details" blog.id %}" class="btn-link stretched-link text-reset fw-bold">{{blog.title}}</a></h5>
+                <div class="d-none d-sm-inline-block">
+                  <p class="mb-2">{{blog.description}}</p>
+                  <!-- BLog date -->
+                  <a class="small text-secondary" href="{% url "details" blog.id %}"> <i class="bi bi-calendar-date pe-1"></i>{{blog.created}}</a>
+                  {% if blog.user == request.user %}
+                  <form method="post" action="{% url "delete_blog" blog.id %}">
+                    <div class="d"><button type="submit" class="btn btn-lg btn-primary">Delete</button></div>
+                  </form>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Blog item END -->
+          <hr class="my-4">
+          {% endfor %}
+     
+          <!-- Pagination -->
+          <div class="mt-4">
+            <nav aria-label="navigation">
+              <ul class="pagination pagination-light d-inline-block d-md-flex justify-content-center">
+                <li class="page-item disabled">
+                  <a class="page-link" href="https://social.webestica.com/blog.html#">Prev</a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="https://social.webestica.com/blog.html#">1</a></li>
+                <li class="page-item"><a class="page-link" href="https://social.webestica.com/blog.html#">2</a></li>
+                <li class="page-item disabled"><a class="page-link" href="https://social.webestica.com/blog.html#">...</a></li>
+                <li class="page-item"><a class="page-link" href="https://social.webestica.com/blog.html#">15</a></li>
+                <li class="page-item">
+                  <a class="page-link" href="https://social.webestica.com/blog.html#">Next</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <!-- Main content END -->
+      <!-- Right sidebar START -->
+      <div class="col-lg-4">
+        <div class="row g-4">
+          <!-- Card News START -->
+          <div class="col-sm-6 col-lg-12">
+            <div class="card">
+              <!-- Card header START -->
+              <div class="card-header pb-0 border-0">
+                <h5 class="card-title mb-0">Recent post</h5>
+              </div>
+              <!-- Card header END -->
+              <!-- Card body START -->
+              <div class="card-body">
+                {% for blog in blogs %}
+                <!-- News item -->
+                <div class="mb-3">
+                  <h6 class="mb-0"><a href="{% url "details" blog.id %}">{{blog.title}}</a></h6>
+                  <small>{{blog.created}}</small>
+                </div>
+                
+                {% endfor %}
+                <!-- Load more comments -->
+                
+              </div>
+              <!-- Card body END -->
+            </div>
+          </div>
+          <!-- Card News END -->
+
+      
+        </div>
+        <!-- Card follow START -->
+        <div class="col-sm-6 col-lg-12">
+          <div class="card">
+            <!-- Card header START -->
+            <div class="card-header pb-0 border-0">
+              <h5 class="card-title mb-0">Add Blog</h5>
+            </div>
+            <!-- Card header END -->
+            <!-- Card body START -->
+            <div class="card-body">
+              <form class="mt-sm-4" method="post" enctype="multipart/form-data" action="{% url "add_blog" %}">
+                {% csrf_token %}
+                <!-- Category -->
+                <div class="mb-3 input-group-lg">
+                  <select name="category" class="form-select" placeholder="Category">
+                    <option value="">Select Category</option>
+                    {% for category in categories %}
+                    <option value="{{category.id}}">{{category}}</option>
+                    {% endfor %}
+                    <!-- Add more categories as needed -->
+                  </select>
+                </div>
+            
+                <!-- Title -->
+                <div class="mb-3 input-group-lg">
+                    <input type="text" name="title" class="form-control" placeholder="Title">
+                </div>
+            
+                <!-- Description -->
+                <div class="mb-3 input-group-lg">
+                    <textarea name="description" class="form-control" placeholder="Description"></textarea>
+                </div>
+            
+                <!-- Image -->
+                <div class="mb-3 input-group-lg">
+                    <input type="file" name="image" class="form-control" accept="image/*">
+                </div>
+            
+             
+            
+             
+            
+                <span>{{error_message}}</span>
+            
+                <!-- Button -->
+                <div class="d-grid"><button type="submit" class="btn btn-lg btn-primary">Login</button></div>
+            </form>
+            
+              <!-- Card body END -->
+            </div>
+          </div>
+          <!-- Card follow START -->
+        </div>
+        <!-- Right sidebar END -->
+      </div> <!-- Row END -->
+    </div>
+  </div>
+  <!-- Container END -->
+
+</main>
+<!-- **************** MAIN CONTENT END **************** -->
+
+
+
+
+{% endblock content %}
